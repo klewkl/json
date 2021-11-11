@@ -53,7 +53,7 @@ class Advert(ColorizeMixin):
     if isinstance(value, list):
       return [self.compute_attr_value(x) for x in value]
     elif isinstance(value, dict):
-      return json_to_python(value)
+      return Advert(value)
     else:
       return value
 
