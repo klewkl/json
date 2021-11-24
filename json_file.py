@@ -2,7 +2,6 @@ import json
 
 nearest_station_adv = """{
   "title": "iPhone X",
-  "price": -3,
   "location": {
     "address": "город Самара, улица Мориса Тореза, 50",
     "metro_stations": ["Спортивная", "Гагаринская"]
@@ -47,10 +46,20 @@ class Advert(ColorizeMixin):
     self.file = file
     
     for attr, val in file.items():
-      if attr == 'price' and val < 0:
-        print('ValueError("price must be >= 0')
-      
       setattr(self, attr, self.compute_attr_value(val))
+  
+  @property
+  def price(self):
+      if "price" not in self.file:
+        return 0
+      else:
+        return self.file["price"]
+
+  @price.setter
+  def price(self, new_price):
+      if new_price < 0:
+        print( 'ValueError: price must be >= 0')
+      self._price = new_price
 
   def compute_attr_value(self, value):
     if isinstance(value, list):
