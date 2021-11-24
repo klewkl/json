@@ -2,7 +2,7 @@ import json
 
 nearest_station_adv = """{
   "title": "iPhone X",
-  "price": 100,
+  "price": -3,
   "location": {
     "address": "город Самара, улица Мориса Тореза, 50",
     "metro_stations": ["Спортивная", "Гагаринская"]
@@ -47,7 +47,10 @@ class Advert(ColorizeMixin):
     self.file = file
     
     for attr, val in file.items():
-        setattr(self, attr, self.compute_attr_value(val))
+      if attr == 'price' and val < 0:
+        print('ValueError("price must be >= 0')
+      
+      setattr(self, attr, self.compute_attr_value(val))
 
   def compute_attr_value(self, value):
     if isinstance(value, list):
@@ -57,10 +60,13 @@ class Advert(ColorizeMixin):
     else:
       return value
 
-  def __repr__(self):
-    return f'{self.title} | {self.price} ₽'
+    def __repr__(self):
+        return f"{self.title} | {self.price} ₽"
+
 
 # add_phone = Advert(iphone_ad)
+# add_phone.price
+
 # add_phone.title, add_phone.price, add_phone.location.address
 
 # add_dog = Advert(category_ad)
